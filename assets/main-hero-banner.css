@@ -4,11 +4,11 @@
 }
 
 .hero-banner-main {
-    height: 100dvh;
+    height: 421px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
     text-align: center;
     padding: 20px;
     background-image: var(--bg-image);
@@ -19,8 +19,10 @@
 }
 
 .hero-content {
+    height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
     align-items: center;
     gap: 16px;
 }
