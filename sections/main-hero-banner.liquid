@@ -1,0 +1,63 @@
+<link rel="stylesheet" href="{{ 'main-hero-banner.css' | asset_url }}">
+
+<section class="main-hero-section" data-section-id="{{ section.id }}">
+  <!-- Main Banner Area -->
+  <div class="hero-banner-main" style="--bg-image: url('{{ 'banner-bg.svg' | asset_url }}');">
+    <div class="hero-content">
+      <h1 class="hero-heading">{{ section.settings.heading }}</h1>
+      <div class="hero-description">{{ section.settings.description }}</div>
+      <a href="{{ section.settings.button_link }}" class="hero-cta-button">
+        <span class="btn-text">{{ section.settings.button_text }}</span>
+        <span class="btn-icon">{% render 'icon-arrow' %}</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Bottom Bar Area -->
+  <div class="hero-bottom-bar">
+    <p class="bottom-bar-text">{{ section.settings.bottom_bar_text }}</p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Main hero banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The Gift Guide"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection..."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "SHOP NOW"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "default": "/collections/all"
+    },
+    {
+      "type": "text",
+      "id": "bottom_bar_text",
+      "label": "Bottom bar text",
+      "default": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Main hero banner"
+    }
+  ]
+}
+{% endschema %}
