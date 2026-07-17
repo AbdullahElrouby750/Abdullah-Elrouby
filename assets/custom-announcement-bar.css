@@ -109,12 +109,12 @@
 }
 
 .cta-button:hover .btn-text,
-.cta-button:hover .btn-icon {
+.cta-button:hover .btn-icon path {
     color: #FFFFFF;
-    fill: #FFFFFF!important;
+    fill: #FFFFFF;
 }
 
-.btn-icon svg {
+.btn-icon path {
     transition: color 0.3s ease-in;
     margin-left: 6px;
 }

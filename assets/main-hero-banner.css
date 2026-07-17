@@ -81,14 +81,14 @@
 }
 
 .hero-cta-button:hover .btn-text,
-.hero-cta-button:hover .btn-icon {
-    fill: #000000 !important;
-    color: #000000 !important;
+.hero-cta-button:hover .btn-icon path{
+    fill: #000000 ;
+    color: #000000 ;
 }
 
-.hero-cta-button .btn-icon svg {
-    color: #fff !important;
-    fill: #fff !important;
+.hero-cta-button .btn-icon path {
+    color: #fff ;
+    fill: #fff ;
 }
 
 .hero-bottom-bar {
