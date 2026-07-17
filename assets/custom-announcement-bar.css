@@ -1,138 +1,160 @@
+/* BASE MOBILE STYLES */
 .custom-announcement-bar {
-  display: flex;
-  flex-direction: column;
-  background: #F7F7F7;
-  font-family: 'Jost', sans-serif;
+    display: flex;
+    flex-direction: column;
+    background: #F7F7F7;
+    font-family: 'Jost', sans-serif;
 }
 
 .custom-announcement-bar-header {
-  display: flex;
-  align-items: center;
-  padding: 23px 16px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
-  position: relative;
-  z-index: 2;
+    display: flex;
+    align-items: center;
+    padding: 23px 16px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+    position: relative;
+    z-index: 2;
+    background: #F7F7F7;
+    /* Prevents the dropdown from bleeding through */
 }
+
 .mobile-toggle {
-  display: flex;
-  align-items: center;
-  background: transparent;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  color: inherit;
+    display: flex;
+    align-items: center;
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: inherit;
 }
 
 .logo {
-  font-size: 16px;
-  font-weight: 400;
-  color: #000000;
-  text-align: center;
-  flex-grow: 1; /* Pushes logo to true center */
-  margin-right: 18px; /* Offsets the width of the hamburger to balance center */
+    font-size: 16px;
+    font-weight: 400;
+    color: #000000;
+    text-align: center;
+    flex-grow: 1;
+    margin-right: 18px;
 }
 
+/* MOBILE DROPDOWN ANIMATION */
 .content-wrapper {
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  background: #F2F2F2;
-  padding: 25px 65px;
-  gap: 16px;
-  width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #F2F2F2;
+    gap: 16px;
+    width: 100%;
+
+    /* Physics for the slide-down */
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-20px);
+    padding: 0 65px;
+    overflow: hidden;
+    transition: max-height 0.4s ease, opacity 0.3s ease, transform 0.3s ease, padding 0.4s ease;
+    z-index: 1;
+}
+
+.custom-announcement-bar.is-open .content-wrapper {
+    max-height: 250px;
+    opacity: 1;
+    transform: translateY(0);
+    padding: 25px 65px;
 }
 
 .icon-open {
-  display: inline-flex;
+    display: inline-flex;
 }
 
 .icon-close {
-  display: none;
+    display: none;
 }
 
+.custom-announcement-bar.is-open .icon-open {
+    display: none;
+}
+
+.custom-announcement-bar.is-open .icon-close {
+    display: block;
+}
+
+/* THE BUTTON */
 .cta-button {
-  display: flex;
-  align-items: center;
-  background: #FFF544;
-  color: #000000;
-  text-transform: uppercase;
-  padding: 12px 24px;
-  border: 1.5px solid #000000;
-  position: relative;
-  overflow: hidden;
-  z-index: 1;
-  text-decoration: none;
-  transition: color 0.3s ease-in;
+    display: flex;
+    align-items: center;
+    background: #FFF544;
+    color: #000000;
+    text-transform: uppercase;
+    padding: 12px 24px;
+    border: 0px solid #000000;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    text-decoration: none;
 }
 
 .cta-button::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: #000000;
-  z-index: -1;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease-in;
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: #000000;
+    z-index: -1;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease-in;
 }
 
 .cta-button:hover::before {
-  transform: scaleX(1);
+    transform: scaleX(1);
 }
 
 .cta-button:hover .btn-text,
 .cta-button:hover .btn-icon {
-  color: #FFFFFF;
+    color: #FFFFFF;
 }
 
 .btn-icon svg {
-  fill: currentColor;
+    transition: color 0.3s ease-in;
 }
 
+/* DESKTOP STYLES (Strict 25/50/25 Layout) */
 @media (min-width: 768px) {
-  .custom-announcement-bar {
-    flex-direction: row;
-    align-items: center;
-    background: #F5F5F5;
-    padding: 10px 50px;
-    height: 64px;
-    box-shadow: none;
-  }
+    .custom-announcement-bar {
+        display: grid;
+        grid-template-columns: 25% 50% 25%;
+        /* Forces the exact widths you requested */
+        align-items: center;
+        background: #F5F5F5;
+        padding: 10px 50px;
+        height: 64px;
+    }
 
-  .custom-announcement-bar-header {
-    box-shadow: none;
-    padding: 0;
-    flex-grow: 0;
-  }
+    .custom-announcement-bar-header {
+        padding: 0;
+        box-shadow: none;
+        background: transparent;
+    }
 
-  .mobile-toggle {
-    display: none;
-  }
+    .mobile-toggle {
+        display: none;
+    }
 
-  .logo {
-    margin-right: 0;
-    text-align: left;
-  }
+    .logo {
+        margin-right: 0;
+        text-align: left;
+    }
 
-  .content-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 0 0 0 50px; /* Fluid spacing instead of 360px gap */
-    background: transparent;
-  }
-}
+    /* Nullifies the wrapper to let children act as direct grid items */
+    .content-wrapper {
+        display: contents;
+    }
 
-.custom-announcement-bar.is-open .content-wrapper {
-  display: flex;
-}
+    .announcement-text {
+        text-align: center;
+    }
 
-.custom-announcement-bar.is-open .icon-open {
-  display: none;
-}
-
-.custom-announcement-bar.is-open .icon-close {
-  display: block;
+    .cta-button {
+        justify-self: end;
+        /* Snaps the button to the far right of its 25% column */
+    }
 }
