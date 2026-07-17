@@ -29,7 +29,7 @@
 
 .logo {
     font-size: 16px;
-    font-weight: 400;
+    font-weight: 800;
     color: #000000;
     text-align: center;
     flex-grow: 1;
@@ -81,11 +81,11 @@
 /* THE BUTTON */
 .cta-button {
     display: flex;
-    align-items: center;
+    align-items: end;
     background: #FFF544;
     color: #000000;
     text-transform: uppercase;
-    padding: 12px 24px;
+    padding: 12px 34px;
     border: 0px solid #000000;
     position: relative;
     overflow: hidden;
@@ -111,11 +111,12 @@
 .cta-button:hover .btn-text,
 .cta-button:hover .btn-icon {
     color: #FFFFFF;
-    fill: #FFFFFF;
+    fill: #FFFFFF!important;
 }
 
 .btn-icon svg {
     transition: color 0.3s ease-in;
+    margin-left: 6px;
 }
 
 /* DESKTOP STYLES (Strict 25/50/25 Layout) */
