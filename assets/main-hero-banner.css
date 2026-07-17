@@ -19,7 +19,6 @@
 }
 
 .hero-content {
-    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -36,15 +35,15 @@
 
 .hero-heading {
     font-family: 'Jost', sans-serif;
-    font-size: 30px;
-    font-weight: 800;
+    font-size: 50px;
+    font-weight: 500;
     color: #000000;
     margin: 0;
 }
 
 .hero-description {
     font-family: 'Jost', sans-serif;
-    font-size: 16px;
+    font-size: 24px;
     font-weight: 400;
     color: #000000;
     max-width: 100%;
@@ -119,12 +118,13 @@
     }
 
     .hero-text {
-        height: 25%;
+        height: 35%;
         justify-content: space-around;
     }
 
     .hero-content {
-        padding: 0px 40px
+        height: 100%;
+        padding: 0px 30px
     }
 }
 
