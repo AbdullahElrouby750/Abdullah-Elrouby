@@ -4,17 +4,17 @@
 }
 
 .hero-banner-main {
-    height: 421px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
     padding: 20px;
-    background-image: var(--bg-image);
+    background-image: var(--bg-small-image);
     background-repeat: no-repeat;
-    background-position: bottom center;
-    background-size: cover;
+    background-position: 47% 100%;
+    background-size:190%;
     background-color: #FFFFFF;
 }
 
@@ -111,11 +111,20 @@
 
 @media (max-width: 768px) {
     .main-hero-section {
-        height: 100%;
+        height: 70dvh;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         align-items: center;
+    }
+
+    .hero-text {
+        height: 25%;
+        justify-content: space-around;
+    }
+
+    .hero-content {
+        padding: 0px 40px
     }
 }
 
