@@ -32,7 +32,6 @@
       "block_order": [
         "announcement_BxgCk9"
       ],
-      "disabled": true,
       "name": "t:names.announcement_bar",
       "settings": {
         "speed": 5,
@@ -82,7 +81,6 @@
           "blocks": {}
         }
       },
-      "disabled": true,
       "settings": {
         "logo_position": "left",
         "menu_position": "left",
@@ -127,21 +125,10 @@
         "collection_inverse_logo": false,
         "text_color_transparent_collection": ""
       }
-    },
-    "custom_announcement_bar_7q8J4Q": {
-      "type": "custom-announcement-bar",
-      "name": "Custom announcement bar",
-      "settings": {
-        "logo_text": "TISSO VISON",
-        "announcement_text": "Find the ideal gift for your loved ones.",
-        "button_text": "CHOOSE GIFT",
-        "button_link": "shopify://collections/all"
-      }
     }
   },
   "order": [
     "header_announcements_9jGBFp",
-    "header_section",
-    "custom_announcement_bar_7q8J4Q"
+    "header_section"
   ]
 }
