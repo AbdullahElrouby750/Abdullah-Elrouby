@@ -2,10 +2,15 @@
 
 <section class="main-hero-section" data-section-id="{{ section.id }}">
   <!-- Main Banner Area -->
-  <div class="hero-banner-main" style="--bg-image: url('{{ 'banner-bg.svg' | asset_url }}');">
+  <div
+    class="hero-banner-main"
+    style="--bg-small-image: url('{{ 'banner-bg.svg' | asset_url }}');--bg-large-image: url('{{ 'banner-large-bg.svg' | asset_url }}');"
+  >
     <div class="hero-content">
-      <h1 class="hero-heading">{{ section.settings.heading }}</h1>
-      <div class="hero-description">{{ section.settings.description }}</div>
+      <div class="hero-text">
+        <h1 class="hero-heading">{{ section.settings.heading }}</h1>
+        <div class="hero-description">{{ section.settings.description }}</div>
+      </div>
       <a href="{{ section.settings.button_link }}" class="hero-cta-button">
         <span class="btn-text">{{ section.settings.button_text }}</span>
         <span class="btn-icon">{% render 'icon-arrow' %}</span>
@@ -33,7 +38,7 @@
       "type": "textarea",
       "id": "description",
       "label": "Description",
-      "default": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection..."
+      "default": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season."
     },
     {
       "type": "text",
