@@ -111,6 +111,7 @@
 .cta-button:hover .btn-text,
 .cta-button:hover .btn-icon {
     color: #FFFFFF;
+    fill: #FFFFFF;
 }
 
 .btn-icon svg {
