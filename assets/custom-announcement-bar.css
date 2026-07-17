@@ -1,0 +1,138 @@
+.custom-announcement-bar {
+  display: flex;
+  flex-direction: column;
+  background: #F7F7F7;
+  font-family: 'Jost', sans-serif;
+}
+
+.custom-announcement-bar-header {
+  display: flex;
+  align-items: center;
+  padding: 23px 16px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+  position: relative;
+  z-index: 2;
+}
+.mobile-toggle {
+  display: flex;
+  align-items: center;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: inherit;
+}
+
+.logo {
+  font-size: 16px;
+  font-weight: 400;
+  color: #000000;
+  text-align: center;
+  flex-grow: 1; /* Pushes logo to true center */
+  margin-right: 18px; /* Offsets the width of the hamburger to balance center */
+}
+
+.content-wrapper {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  background: #F2F2F2;
+  padding: 25px 65px;
+  gap: 16px;
+  width: 100%;
+}
+
+.icon-open {
+  display: inline-flex;
+}
+
+.icon-close {
+  display: none;
+}
+
+.cta-button {
+  display: flex;
+  align-items: center;
+  background: #FFF544;
+  color: #000000;
+  text-transform: uppercase;
+  padding: 12px 24px;
+  border: 1.5px solid #000000;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  text-decoration: none;
+  transition: color 0.3s ease-in;
+}
+
+.cta-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #000000;
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease-in;
+}
+
+.cta-button:hover::before {
+  transform: scaleX(1);
+}
+
+.cta-button:hover .btn-text,
+.cta-button:hover .btn-icon {
+  color: #FFFFFF;
+}
+
+.btn-icon svg {
+  fill: currentColor;
+}
+
+@media (min-width: 768px) {
+  .custom-announcement-bar {
+    flex-direction: row;
+    align-items: center;
+    background: #F5F5F5;
+    padding: 10px 50px;
+    height: 64px;
+    box-shadow: none;
+  }
+
+  .custom-announcement-bar-header {
+    box-shadow: none;
+    padding: 0;
+    flex-grow: 0;
+  }
+
+  .mobile-toggle {
+    display: none;
+  }
+
+  .logo {
+    margin-right: 0;
+    text-align: left;
+  }
+
+  .content-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 0 0 50px; /* Fluid spacing instead of 360px gap */
+    background: transparent;
+  }
+}
+
+.custom-announcement-bar.is-open .content-wrapper {
+  display: flex;
+}
+
+.custom-announcement-bar.is-open .icon-open {
+  display: none;
+}
+
+.custom-announcement-bar.is-open .icon-close {
+  display: block;
+}

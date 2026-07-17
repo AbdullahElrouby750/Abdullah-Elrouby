@@ -1,0 +1,57 @@
+<link rel="stylesheet" href="{{ 'custom-announcement-bar.css' | asset_url }}">
+<script src="{{ 'custom-announcement-bar.js' | asset_url }}" defer="defer"></script>
+
+<custom-announcement-bar class="custom-announcement-bar" data-section-id="{{ section.id }}">
+  <div class="custom-announcement-bar-header">
+    <button class="mobile-toggle" aria-expanded="false">
+      <span class="icon-open">{% render 'icon-hamburger' %}</span>
+      <span class="icon-close">{% render 'icon-close' %}</span>
+    </button>
+    <div class="logo">{{ section.settings.logo_text }}</div>
+  </div>
+
+  <div class="content-wrapper">
+    <div class="announcement-text">{{ section.settings.announcement_text }}</div>
+    <a href="{{ section.settings.button_link }}" class="cta-button">
+      <span class="btn-text">{{ section.settings.button_text }}</span>
+      <span class="btn-icon">{% render 'icon-arrow' %}</span>
+    </a>
+  </div>
+</custom-announcement-bar>
+
+{% schema %}
+{
+  "name": "Custom announcement bar",
+  "settings": [
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo text",
+      "default": "TISSO VISON"
+    },
+    {
+      "type": "text",
+      "id": "announcement_text",
+      "label": "Announcement text",
+      "default": "Find the ideal gift for your loved ones."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "CHOOSE GIFT"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "default": "/collections/all"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom announcement bar"
+    }
+  ]
+}
+{% endschema %}
