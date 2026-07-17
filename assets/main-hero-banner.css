@@ -74,10 +74,12 @@
 
 .hero-cta-button:hover .btn-text,
 .hero-cta-button:hover .btn-icon {
-  color: #000000;
+  fill: #000000!important;
+  color: #000000!important;
 }
 
 .hero-cta-button .btn-icon svg {
+  color: #fff!important;
   fill: #fff!important;
 }
 
