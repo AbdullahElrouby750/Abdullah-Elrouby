@@ -8,6 +8,7 @@
         this.handleOptionSelect = this.handleOptionSelect.bind(this);
         this.handleColorChange = this.handleColorChange.bind(this);
         this.handleOverlayClick = this.handleOverlayClick.bind(this);
+        this.addToCart = this.addToCart.bind(this);
     }
 
     connectedCallback() {
@@ -32,6 +33,10 @@
             radio.addEventListener('change', this.handleColorChange);
         });
 
+        this.querySelectorAll('.add-to-cart-button').forEach((btn) => {
+            btn.addEventListener('click', this.addToCart);
+        });
+
         const overlay = this.querySelector('.modal-overlay');
         if (overlay) overlay.addEventListener('click', this.handleOverlayClick);
 
@@ -48,6 +53,9 @@
         this.querySelectorAll('.custom-select-trigger').forEach(btn => btn.removeEventListener('click', this.handleDropdownToggle));
         this.querySelectorAll('.custom-select-option').forEach(btn => btn.removeEventListener('click', this.handleOptionSelect));
         this.querySelectorAll('.color-swatch input[type="radio"]').forEach(btn => btn.removeEventListener('change', this.handleColorChange));
+        this.querySelectorAll('.add-to-cart-button').forEach((btn) => {
+            btn.removeEventListener('click', this.addToCart);
+        });
         const overlay = this.querySelector('.modal-overlay');
         if (overlay) overlay.removeEventListener('click', this.handleOverlayClick);
     }
@@ -217,6 +225,101 @@
             activeCard.classList.remove('is-active');
         });
     }
+
+
+
+    /** @param {Event} event */
+    async addToCart(event) {
+        event.preventDefault();
+        const button = event.currentTarget;
+        const card = button.closest('.look-card');
+        const variantId = button.dataset.variantId;
+
+        if (!variantId) return; // Failsafe
+
+        // 1. Read current state for the "Gotcha" test
+        const selectedColor = card.querySelector('.color-swatch input[type="radio"]:checked')?.value;
+        const selectedSize = card.querySelector('input[type="hidden"]')?.value;
+
+        // 2. Build the Payload Array
+        let itemsPayload = [{ id: parseInt(variantId), quantity: 1 }];
+
+        // 3. Execute the Gotcha Check (Black & Medium -> Add Jacket)
+        if (selectedColor === 'Black' && selectedSize === 'M') {
+            const shopTheLookWrapper = this.closest('shop-the-look');
+            const bonusVariantId = shopTheLookWrapper.dataset.bonusVariantId;
+
+            if (bonusVariantId) {
+                itemsPayload.push({ id: parseInt(bonusVariantId), quantity: 1 });
+            }
+        }
+
+        // 4. Trigger UI Loading State
+        button.classList.add('is-loading');
+        const btnText = button.querySelector('.btn-text');
+        const originalText = btnText.textContent;
+        btnText.textContent = 'ADDING...';
+
+        try {
+            // 5. Fire the Shopify AJAX Request
+            const response = await fetch(window.Shopify.routes.root + 'cart/add.js', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ items: itemsPayload })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.description || 'Error adding item to cart.');
+            }
+
+            // 6. Handle Success UI
+            button.classList.remove('is-loading');
+            button.classList.add('is-success');
+            btnText.textContent = 'ADDED!';
+
+            // Trigger Dawn's native cart update listeners to open the drawer
+            document.documentElement.dispatchEvent(new CustomEvent('cart:change', { bubbles: true }));
+            window.dispatchEvent(new Event('cart-updated')); // Fallback for older theme architectures
+
+            // 7. Reset Button after 2 seconds
+            setTimeout(() => {
+                button.classList.remove('is-success');
+                btnText.textContent = originalText;
+            }, 2000);
+
+        } catch (error) {
+            // 8. Handle Failure UI (Out of stock, etc.)
+            button.classList.remove('is-loading');
+            btnText.textContent = originalText;
+            this.showToast(error.message);
+        }
+    }
+
+    /** @param {string} message */
+    showToast(message) {
+        let toast = document.querySelector('.stl-toast');
+
+        // Create the toast node if it doesn't exist yet
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.className = 'stl-toast';
+            document.body.appendChild(toast);
+        }
+
+        toast.textContent = message;
+
+        // Force browser reflow to ensure animation triggers
+        void toast.offsetWidth;
+        toast.classList.add('is-visible');
+
+        // Auto-vanish after 3 seconds
+        setTimeout(() => {
+            toast.classList.remove('is-visible');
+        }, 3000);
+    }
+
+
 }
 
 customElements.define('shop-the-look', ShopTheLook);

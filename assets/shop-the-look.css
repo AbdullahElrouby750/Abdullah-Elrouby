@@ -368,11 +368,41 @@
     text-decoration: line-through;
     pointer-events: none;
 }
+/* Add-to-Cart Loading & Success States */
 .add-to-cart-button.is-loading {
-    pointer-events: none;
-    opacity: 0.7;
+  opacity: 0.7;
+  pointer-events: none;
 }
 .add-to-cart-button.is-success {
-    background: #4CAF50; /* Green success state */
-    color: #FFFFFF;
+  background: #4CAF50; /* Green success */
+  color: #FFFFFF;
+  border-color: #4CAF50;
+}
+
+.add-to-cart-button.is-success::before {
+  display: none; /* Hide the yellow sweep on success */
+}
+
+/* Custom Vanilla JS Toast Alert */
+.stl-toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px); /* Starts hidden below screen */
+  background: #000000;
+  color: #FFFFFF;
+  padding: 12px 24px;
+  border-radius: 4px;
+  font-family: 'Jost', sans-serif;
+  font-size: 14px;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.stl-toast.is-visible {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
 }
