@@ -261,18 +261,19 @@
         btnText.textContent = 'ADDING...';
 
         try {
-            // 5. Fire the Request & Demand the Updated Cart Sections from Shopify
+            // 5. Fire the Request & Demand the Updated Sections from Shopify
+            // FIX: Requesting the 'header' section instead of 'cart-icon-bubble'
             const response = await fetch(window.Shopify.routes.root + 'cart/add.js', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     items: itemsPayload,
-                    sections: 'cart-icon-bubble,cart-drawer', // Tell Shopify to return fresh HTML for these
+                    sections: 'header,cart-drawer',
                     sections_url: window.location.pathname
                 })
             });
 
-            const responseData = await response.json(); // Parse the response to get our data
+            const responseData = await response.json();
 
             if (!response.ok) {
                 throw new Error(responseData.description || 'Error adding item to cart.');
@@ -283,35 +284,47 @@
             button.classList.add('is-success');
             btnText.textContent = 'ADDED!';
 
-            // 7. Inject Dawn's Native Cart Sections (The Magic Fix)
+            // 7. Inject Native Cart Sections (Surgical DOM Extraction)
             if (responseData.sections) {
+                const parser = new DOMParser();
 
-                // Helper to safely extract the inner HTML of the Shopify section wrapper
-                const extractInner = (htmlString) => {
-                    const parsed = new DOMParser().parseFromString(htmlString, 'text/html');
-                    return parsed.body.firstElementChild ? parsed.body.firstElementChild.innerHTML : '';
-                };
+                // A. Update the Bubble Count by plucking it out of the fresh Header
+                if (responseData.sections['header']) {
+                    const freshHeader = parser.parseFromString(responseData.sections['header'], 'text/html');
 
-                // A. Update the Bubble Count (Targeting the section wrapper directly)
-                const bubbleWrapper = document.getElementById('shopify-section-cart-icon-bubble');
-                if (bubbleWrapper && responseData.sections['cart-icon-bubble']) {
-                    bubbleWrapper.innerHTML = extractInner(responseData.sections['cart-icon-bubble']);
+                    // Look for the standard Dawn ID, fallback to the standard class
+                    const newCartBubble = freshHeader.getElementById('cart-icon-bubble') || freshHeader.querySelector('.header__icon--cart');
+                    const oldCartBubble = document.getElementById('cart-icon-bubble') || document.querySelector('.header__icon--cart');
+
+                    if (newCartBubble && oldCartBubble) {
+                        oldCartBubble.innerHTML = newCartBubble.innerHTML;
+                    }
                 }
 
                 // B. Update the Drawer Content Safely
-                const drawerWrapper = document.getElementById('shopify-section-cart-drawer');
-                if (drawerWrapper && responseData.sections['cart-drawer']) {
-                    drawerWrapper.innerHTML = extractInner(responseData.sections['cart-drawer']);
+                if (responseData.sections['cart-drawer']) {
+                    const freshDrawer = parser.parseFromString(responseData.sections['cart-drawer'], 'text/html');
+
+                    // Look for the web component tag, fallback to the section wrapper ID
+                    const newDrawerInner = freshDrawer.querySelector('cart-drawer') || freshDrawer.getElementById('CartDrawer') || freshDrawer.body.firstElementChild;
+                    const oldDrawerWrapper = document.querySelector('cart-drawer') || document.getElementById('shopify-section-cart-drawer');
+
+                    if (newDrawerInner && oldDrawerWrapper) {
+                        if (oldDrawerWrapper.tagName.toLowerCase() === 'cart-drawer') {
+                            oldDrawerWrapper.innerHTML = newDrawerInner.innerHTML;
+                        } else {
+                            oldDrawerWrapper.innerHTML = freshDrawer.body.firstElementChild.innerHTML;
+                        }
+                    }
                 }
 
-                // C. Command Dawn's Web Component to Slide Open
+                // C. Command the Web Component to Slide Open
                 const drawerComponent = document.querySelector('cart-drawer');
                 if (drawerComponent) {
                     if (typeof drawerComponent.open === 'function') {
-                        // Modern Dawn 
                         drawerComponent.open();
                     } else if (drawerComponent.classList) {
-                        // Fallback for older Dawn architectures
+                        // Fallback for older drawer architectures
                         drawerComponent.classList.add('active');
                         document.body.classList.add('overflow-hidden');
                     }
@@ -325,7 +338,7 @@
             }, 2000);
 
         } catch (error) {
-            // Handle Failure UI (Out of stock, etc.)
+            // Handle Failure UI
             button.classList.remove('is-loading');
             btnText.textContent = originalText;
             this.showToast(error.message);
