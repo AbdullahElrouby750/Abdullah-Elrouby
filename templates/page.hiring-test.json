@@ -19,9 +19,62 @@
         "button_link": "shopify://collections/all",
         "bottom_bar_text": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL"
       }
+    },
+    "shop_the_look_grid_fyVyNj": {
+      "type": "shop-the-look-grid",
+      "blocks": {
+        "look_zPc9ME": {
+          "type": "look",
+          "settings": {
+            "image": "shopify://shop_images/casual-fashion-woman_925x_56b56608-f207-45c1-b677-bb5aa26c1c7a.jpg",
+            "product": "classic-varsity-top",
+            "hotspot_x": 50,
+            "hotspot_y": 50
+          }
+        },
+        "look_ttqncn": {
+          "type": "look",
+          "settings": {
+            "image": "shopify://shop_images/young-man-in-bright-fashion_925x_b3b7ebd6-c91f-496a-a516-45403497ea25.jpg",
+            "product": "ocean-blue-shirt",
+            "hotspot_x": 35,
+            "hotspot_y": 50
+          }
+        },
+        "look_zYjbKD": {
+          "type": "look",
+          "settings": {
+            "image": "shopify://shop_images/man-adjusts-blue-tuxedo-bowtie_925x_55a49e12-d54b-488e-b7a0-ea4c201eb01f.jpg",
+            "product": "blue-silk-tuxedo",
+            "hotspot_x": 85,
+            "hotspot_y": 55
+          }
+        },
+        "look_BrKWUb": {
+          "type": "look",
+          "settings": {
+            "image": "shopify://shop_images/smiling-woman-on-snowy-afternoon_925x_bdcaf0cb-c761-46c3-a529-bd1e7849dc43.jpg",
+            "product": "dark-winter-jacket",
+            "hotspot_x": 50,
+            "hotspot_y": 80
+          }
+        }
+      },
+      "block_order": [
+        "look_zPc9ME",
+        "look_ttqncn",
+        "look_zYjbKD",
+        "look_BrKWUb"
+      ],
+      "name": "Shop the look grid",
+      "settings": {
+        "heading": "Tisso vison in the wild",
+        "view_all_link": "shopify://collections/all"
+      }
     }
   },
   "order": [
-    "main_hero_banner_84ef3j"
+    "main_hero_banner_84ef3j",
+    "shop_the_look_grid_fyVyNj"
   ]
 }
