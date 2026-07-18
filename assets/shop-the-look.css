@@ -90,6 +90,27 @@
     transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
 }
 
+/* The Dark Background Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 990; /* Sits right beneath the 999 modal */
+  
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Zero-JS Fade In: If any card is active, show the overlay */
+.shop-the-look:has(.look-card.is-active) .modal-overlay {
+  visibility: visible;
+  opacity: 1;
+}
+
 .look-card.is-active .product-modal {
     visibility: visible;
     opacity: 1;
@@ -296,6 +317,7 @@
     cursor: pointer;
     gap: 10px;
     font-size: 16px;
+    font-weight: 400px;
     transition: transform 0.3s ease-in;
 }
 
@@ -315,10 +337,10 @@
 } */
 
 .add-to-cart-button:hover {
-    color: #ececec;
+    color: #131313;
 }
 
-.btn-icon svg {
+.btn-icon path {
     fill: #ffffff;
 }
 
