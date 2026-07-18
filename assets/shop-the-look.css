@@ -47,9 +47,9 @@
 /* Hotspot Button */
 .hotspot-btn {
     position: absolute;
-    width: 22px;
-    height: 22px;
-    background: rgba(248, 248, 248, 0.9);
+    width: 25px;
+    height: 25px;
+    background: #F8F8F8E5;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -72,8 +72,9 @@
     /* Breaks out of the look-card jail */
     top: 50%;
     left: 50%;
-    width: 90%;
-    max-width: 320px;
+    width: 28%;
+    max-width: 365px;
+    max-width: 350px;
     background: #FFFFFF;
     box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.25);
     /* Deepened the shadow so it pops off the page */
@@ -256,6 +257,7 @@
     overflow-y: auto;
     z-index: 5;
     display: none;
+    transition: all 0.3s ease-in;
 }
 
 .custom-select-wrapper.is-open .custom-select-options {
@@ -294,9 +296,10 @@
     cursor: pointer;
     gap: 10px;
     font-size: 16px;
+    transition: transform 0.3s ease-in;
 }
 
-.add-to-cart-button::before {
+/* .add-to-cart-button::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -309,15 +312,14 @@
 
 .add-to-cart-button:hover::before {
     transform: scaleX(1);
-}
+} */
 
-.add-to-cart-button:hover .btn-text,
-.add-to-cart-button:hover .btn-icon {
-    color: #000000;
+.add-to-cart-button:hover {
+    color: #ececec;
 }
 
 .btn-icon svg {
-    fill: currentColor;
+    fill: #ffffff;
 }
 
 @media (min-width: 768px) {
@@ -330,4 +332,25 @@
         font-size: 36px;
     }
 
+}
+
+.custom-select-option.is-unavailable {
+    opacity: 0.3;
+    text-decoration: line-through;
+    pointer-events: none;
+}
+
+
+.custom-select-option.is-unavailable {
+    opacity: 0.3;
+    text-decoration: line-through;
+    pointer-events: none;
+}
+.add-to-cart-button.is-loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+.add-to-cart-button.is-success {
+    background: #4CAF50; /* Green success state */
+    color: #FFFFFF;
 }
