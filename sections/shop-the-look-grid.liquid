@@ -37,7 +37,7 @@
                   {% if option.name == 'Color' %}
                     <div class="option-group">
                       <span class="option-label">Color</span>
-                      <div class="color-picker-ui">
+                      <div class="color-picker-ui" style="--option-count: {{ option.values.size }};">
                         {% for value in option.values %}
                           <!-- Passes the color handle to CSS for the left stripe -->
                           <label class="color-swatch" style="--swatch-color: {{ value | downcase | handle }};">
