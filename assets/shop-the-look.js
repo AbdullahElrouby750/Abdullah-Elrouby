@@ -261,16 +261,21 @@
         btnText.textContent = 'ADDING...';
 
         try {
-            // 5. Fire the Shopify AJAX Request
+            // 5. Fire the Request & Demand the Updated Cart Sections from Shopify
             const response = await fetch(window.Shopify.routes.root + 'cart/add.js', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ items: itemsPayload })
+                body: JSON.stringify({
+                    items: itemsPayload,
+                    sections: 'cart-icon-bubble,cart-drawer', // Tell Shopify to return fresh HTML for these
+                    sections_url: window.location.pathname
+                })
             });
 
+            const responseData = await response.json(); // Parse the response to get our data
+
             if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.description || 'Error adding item to cart.');
+                throw new Error(responseData.description || 'Error adding item to cart.');
             }
 
             // 6. Handle Success UI
@@ -278,18 +283,39 @@
             button.classList.add('is-success');
             btnText.textContent = 'ADDED!';
 
-            // Trigger Dawn's native cart update listeners to open the drawer
-            document.documentElement.dispatchEvent(new CustomEvent('cart:change', { bubbles: true }));
-            window.dispatchEvent(new Event('cart-updated')); // Fallback for older theme architectures
+            // 7. Inject Dawn's Native Cart Sections (The Magic Fix)
+            if (responseData.sections) {
 
-            // 7. Reset Button after 2 seconds
+                // A. Update the Bubble Count
+                const cartBubble = document.getElementById('cart-icon-bubble');
+                if (cartBubble && responseData.sections['cart-icon-bubble']) {
+                    // Parse the returned string into a real DOM node so we don't accidentally nest elements
+                    const parsedBubble = new DOMParser().parseFromString(responseData.sections['cart-icon-bubble'], 'text/html');
+                    cartBubble.innerHTML = parsedBubble.getElementById('cart-icon-bubble').innerHTML;
+                }
+
+                // B. Update the Drawer Content
+                const cartDrawer = document.getElementById('CartDrawer');
+                if (cartDrawer && responseData.sections['cart-drawer']) {
+                    const parsedDrawer = new DOMParser().parseFromString(responseData.sections['cart-drawer'], 'text/html');
+                    cartDrawer.innerHTML = parsedDrawer.getElementById('CartDrawer').innerHTML;
+                }
+
+                // C. Command Dawn's Web Component to Slide Open
+                const drawerComponent = document.querySelector('cart-drawer');
+                if (drawerComponent && typeof drawerComponent.open === 'function') {
+                    drawerComponent.open();
+                }
+            }
+
+            // 8. Reset Button after 2 seconds
             setTimeout(() => {
                 button.classList.remove('is-success');
                 btnText.textContent = originalText;
             }, 2000);
 
         } catch (error) {
-            // 8. Handle Failure UI (Out of stock, etc.)
+            // Handle Failure UI (Out of stock, etc.)
             button.classList.remove('is-loading');
             btnText.textContent = originalText;
             this.showToast(error.message);
