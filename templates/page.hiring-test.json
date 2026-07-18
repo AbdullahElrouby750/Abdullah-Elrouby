@@ -69,7 +69,8 @@
       "name": "Shop the look grid",
       "settings": {
         "heading": "Tisso vison in the wild",
-        "view_all_link": "shopify://collections/all"
+        "view_all_link": "shopify://collections/all",
+        "bonus_product": "dark-winter-jacket"
       }
     }
   },
