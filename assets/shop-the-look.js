@@ -286,25 +286,35 @@
             // 7. Inject Dawn's Native Cart Sections (The Magic Fix)
             if (responseData.sections) {
 
-                // A. Update the Bubble Count
-                const cartBubble = document.getElementById('cart-icon-bubble');
-                if (cartBubble && responseData.sections['cart-icon-bubble']) {
-                    // Parse the returned string into a real DOM node so we don't accidentally nest elements
-                    const parsedBubble = new DOMParser().parseFromString(responseData.sections['cart-icon-bubble'], 'text/html');
-                    cartBubble.innerHTML = parsedBubble.getElementById('cart-icon-bubble').innerHTML;
+                // Helper to safely extract the inner HTML of the Shopify section wrapper
+                const extractInner = (htmlString) => {
+                    const parsed = new DOMParser().parseFromString(htmlString, 'text/html');
+                    return parsed.body.firstElementChild ? parsed.body.firstElementChild.innerHTML : '';
+                };
+
+                // A. Update the Bubble Count (Targeting the section wrapper directly)
+                const bubbleWrapper = document.getElementById('shopify-section-cart-icon-bubble');
+                if (bubbleWrapper && responseData.sections['cart-icon-bubble']) {
+                    bubbleWrapper.innerHTML = extractInner(responseData.sections['cart-icon-bubble']);
                 }
 
-                // B. Update the Drawer Content
-                const cartDrawer = document.getElementById('CartDrawer');
-                if (cartDrawer && responseData.sections['cart-drawer']) {
-                    const parsedDrawer = new DOMParser().parseFromString(responseData.sections['cart-drawer'], 'text/html');
-                    cartDrawer.innerHTML = parsedDrawer.getElementById('CartDrawer').innerHTML;
+                // B. Update the Drawer Content Safely
+                const drawerWrapper = document.getElementById('shopify-section-cart-drawer');
+                if (drawerWrapper && responseData.sections['cart-drawer']) {
+                    drawerWrapper.innerHTML = extractInner(responseData.sections['cart-drawer']);
                 }
 
                 // C. Command Dawn's Web Component to Slide Open
                 const drawerComponent = document.querySelector('cart-drawer');
-                if (drawerComponent && typeof drawerComponent.open === 'function') {
-                    drawerComponent.open();
+                if (drawerComponent) {
+                    if (typeof drawerComponent.open === 'function') {
+                        // Modern Dawn 
+                        drawerComponent.open();
+                    } else if (drawerComponent.classList) {
+                        // Fallback for older Dawn architectures
+                        drawerComponent.classList.add('active');
+                        document.body.classList.add('overflow-hidden');
+                    }
                 }
             }
 
