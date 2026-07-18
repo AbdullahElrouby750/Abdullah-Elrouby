@@ -1,0 +1,288 @@
+.shop-the-look {
+  font-family: 'Jost', sans-serif;
+  color: #000000;
+  display: block;
+  padding: 40px 20px;
+}
+
+.grid-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.grid-title {
+  font-family: 'Lustria', serif;
+  font-size: 24px;
+  font-weight: 400;
+  margin: 0;
+}
+
+.view-all-link {
+  color: #000000;
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: 400;
+}
+
+.looks-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px;
+}
+
+.look-card {
+  position: relative;
+  width: 100%;
+}
+
+.look-main-img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+}
+
+/* Hotspot Button */
+.hotspot-btn {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  background: rgba(248, 248, 248, 0.9);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #000000;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  transition: transform 0.2s ease;
+}
+
+.hotspot-btn:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+/* Slide-up Physics Modal */
+.product-modal {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 90%; 
+  max-width: 320px;
+  background: #FFFFFF;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  z-index: 10;
+  
+  /* Animation physics instead of display: none */
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+}
+
+.look-card.is-active .product-modal {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.modal-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Flexbox layout for thumbnail + text */
+.modal-header-flex {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.product-thumbnail {
+  width: 40%;
+  height: auto;
+  object-fit: cover;
+}
+
+.product-info {
+  width: 60%;
+}
+
+.product-title {
+  font-size: 16px;
+  font-weight: 300;
+  margin: 0 0 8px;
+}
+
+.product-price {
+  font-family: 'Lustria', serif;
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0 0 8px;
+}
+
+.product-desc {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.2;
+}
+
+.option-group {
+  margin-bottom: 16px;
+}
+
+.option-label {
+  display: block;
+  font-size: 14px;
+  color: #333333;
+  margin-bottom: 6px;
+}
+
+/* Figma Perfect Color Swatches */
+.color-picker-ui {
+  display: flex;
+  gap: 8px;
+}
+
+.color-swatch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 12px 0 24px; /* Leaves room for the stripe */
+  border: 0.5px solid #000000;
+  cursor: pointer;
+  background: #FFFFFF;
+}
+
+/* The CSS Color Stripe */
+.color-swatch::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 12px;
+  background-color: var(--swatch-color);
+  border-right: 0.5px solid #000000;
+}
+
+.color-swatch input:checked + .swatch-text {
+  font-weight: 600;
+}
+
+/* Custom Size Dropdown */
+.custom-select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.custom-select-trigger {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  background: #FFFFFF;
+  border: 0.5px solid #000000;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.custom-select-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #FFFFFF;
+  border: 0.5px solid #000000;
+  border-top: none;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 5;
+  display: none;
+}
+
+.custom-select-wrapper.is-open .custom-select-options {
+  display: block;
+}
+
+.custom-select-wrapper.is-open .chevron {
+  transform: rotate(180deg);
+}
+
+.custom-select-option {
+  padding: 10px 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.custom-select-option:hover {
+  background: #F5F5F5;
+}
+
+/* Button with Yellow Sweep */
+.add-to-cart-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: #000000;
+  color: #FFFFFF;
+  text-transform: uppercase;
+  padding: 12px;
+  border: 1.5px solid #000000;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  cursor: pointer;
+  gap: 10px;
+  font-size: 16px;
+}
+
+.add-to-cart-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #FFF544;
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease-in;
+}
+
+.add-to-cart-button:hover::before {
+  transform: scaleX(1);
+}
+
+.add-to-cart-button:hover .btn-text,
+.add-to-cart-button:hover .btn-icon {
+  color: #000000;
+}
+
+.btn-icon svg {
+  fill: currentColor;
+}
+
+@media (min-width: 768px) {
+  .looks-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  
+  .grid-title {
+    font-size: 36px;
+  }
+}
