@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="{{ 'shop-the-look.css' | asset_url }}">
 <script src="{{ 'shop-the-look.js' | asset_url }}" defer="defer"></script>
 
-<shop-the-look class="shop-the-look" data-section-id="{{ section.id }}">
+<shop-the-look class="shop-the-look" data-section-id="{{ section.id }}" data-bonus-variant-id="{{ section.settings.bonus_product.variants.first.id }}">
   <div class="modal-overlay"></div>
 
   <div class="grid-header">
@@ -132,6 +132,11 @@
       "id": "view_all_link",
       "label": "View all link",
       "default": "/collections/all"
+    },
+    {
+      "type": "product",
+      "id": "bonus_product",
+      "label": "Bonus Product (Soft Winter Jacket)"
     }
   ],
   "blocks": [
