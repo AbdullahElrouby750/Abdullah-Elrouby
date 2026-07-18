@@ -96,12 +96,6 @@
     /* Snaps to true dead-center */
 }
 
-.look-card.is-active .product-modal {
-    visibility: visible;
-    opacity: 1;
-    transform: translateY(0);
-}
-
 .modal-close {
     position: absolute;
     top: 8px;
@@ -159,44 +153,76 @@
     margin-bottom: 6px;
 }
 
-/* Figma Perfect Color Swatches */
+/* 1. The Container */
 .color-picker-ui {
+    width: 100%;
     display: flex;
-    gap: 8px;
-}
-
-.color-swatch {
     position: relative;
-    display: inline-flex;
-    align-items: center;
-    height: 32px;
-    padding: 0 12px 0 24px;
-    /* Leaves room for the stripe */
+    z-index: 1;
     border: 0.5px solid #000000;
-    cursor: pointer;
     background: #FFFFFF;
 }
 
-/* The CSS Color Stripe */
+/* 2. The Shared Sliding Black Background */
+.color-picker-ui::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    /* Dynamically divides width based on the number of colors */
+    width: calc(100% / var(--option-count, 2)); 
+    background-color: #000000;
+    z-index: -1; /* Stays behind the text and color stripes */
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); /* Buttery smooth easing */
+}
+
+/* 3. The Slide Logic (Using modern CSS :has to detect checked state) */
+.color-picker-ui:has(.color-swatch:nth-child(1) input:checked)::before { transform: translateX(0%); }
+.color-picker-ui:has(.color-swatch:nth-child(2) input:checked)::before { transform: translateX(100%); }
+.color-picker-ui:has(.color-swatch:nth-child(3) input:checked)::before { transform: translateX(200%); }
+.color-picker-ui:has(.color-swatch:nth-child(4) input:checked)::before { transform: translateX(300%); }
+
+/* 4. The Swatches */
+.color-swatch {
+    flex: 1; /* Forces all options to be exactly equal width */
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 40px;
+    padding: 0 12px 0 24px;
+    cursor: pointer;
+    background: transparent; /* Must be transparent so the sliding block shows through */
+    transition: color 0.3s ease;
+}
+
+/* Adds a border between options, but skips the first one */
+.color-swatch + .color-swatch {
+    border-left: 0.5px solid #000000;
+}
+
+/* 5. The Left Color Stripe */
 .color-swatch::before {
     content: '';
     position: absolute;
     left: 0;
     top: 0;
     bottom: 0;
-    width: 12px;
+    width: 5px;
     background-color: var(--swatch-color);
     border-right: 0.5px solid #000000;
 }
 
-.color-swatch input:checked+.swatch-text {
-    font-weight: 600;
+/* 6. Text Color Inversion */
+.color-swatch:has(input:checked) .swatch-text {
+    color: #FFFFFF;
 }
 
+/* 7. Hide native radio buttons */
 .color-swatch input[type="radio"] {
-  display: none !important;
+    display: none !important;
 }
-
 /* Custom Size Dropdown */
 .custom-select-wrapper {
     position: relative;
@@ -247,7 +273,8 @@
 }
 
 .custom-select-option:hover {
-    background: #F5F5F5;
+    background: #000000;
+    color: #ffffff;
 }
 
 /* Button with Yellow Sweep */
