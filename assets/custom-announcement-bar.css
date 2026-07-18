@@ -117,6 +117,7 @@
 .btn-icon path {
     transition: color 0.3s ease-in;
     margin-left: 16px;
+    fill: #FFFFFF;
 }
 
 /* DESKTOP STYLES (Strict 25/50/25 Layout) */
